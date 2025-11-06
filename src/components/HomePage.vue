@@ -158,19 +158,8 @@ export default {
     shareSticker() {
       this.showShareOptions = true;
       this.texto = `Eu tirei ${this.stickerText || "uma figurinha surpresa"}, qual você vai tirar?`;
+      this.url = window.location.href
 
-      // Pede ao Webflow (pai) a URL atual
-      window.parent.postMessage({ type: 'getParentUrl' }, '*');
-
-      // Escuta a resposta do Webflow
-      window.addEventListener('message', (event) => {
-        if (event.data.type === 'parentUrl') {
-          this.url = event.data.url;
-
-          // Atualiza os botões e o texto de compartilhamento com a URL do pai
-          console.log('URL recebida do Webflow:', this.url);
-        }
-      });
     },
 
     startShuffling() {
