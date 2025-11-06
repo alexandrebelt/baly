@@ -172,6 +172,12 @@ export default {
     }
   });
 },
+//shareSticker() {
+//      this.showShareOptions = true;
+//      this.texto = `Eu tirei ${this.stickerText || "uma figurinha surpresa"}, qual você vai tirar?`;
+//      this.url = window.location.href
+
+//    },
 
     startShuffling() {
       this.isShuffling = true;
@@ -190,20 +196,46 @@ export default {
 
 
 
+   // copiaCola() {
+   //   const texto = `Eu tirei ${this.stickerText || "uma figurinha surpresa"}, qual você vai tirar?`;
+   //   const url = window.location.href;
+//
+   //   const tempInput = document.createElement("input");
+   //   tempInput.value = `${texto} ${url}`;
+   //   document.body.appendChild(tempInput);
+   //   tempInput.select();
+   //   document.execCommand("copy");
+   //   document.body.removeChild(tempInput);
+   //   alert("Link copiado para a área de transferência!");
+//
+   //   this.closeShare()
+   // },
     copiaCola() {
-      const texto = `Eu tirei ${this.stickerText || "uma figurinha surpresa"}, qual você vai tirar?`;
-      const url = window.location.href;
+  const texto = `Eu tirei ${this.stickerText || "uma figurinha surpresa"}, qual você vai tirar?`;
 
+  // solicita ao site pai (Webflow) a URL atual
+  window.parent.postMessage({ type: "getParentUrl" }, "*");
+
+  // escuta a resposta
+  const listener = (event) => {
+    if (event.data.type === "parentUrl") {
+      const parentUrl = event.data.url;
       const tempInput = document.createElement("input");
-      tempInput.value = `${texto} ${url}`;
+      tempInput.value = `${texto} ${parentUrl}`;
       document.body.appendChild(tempInput);
       tempInput.select();
       document.execCommand("copy");
       document.body.removeChild(tempInput);
       alert("Link copiado para a área de transferência!");
 
-      this.closeShare()
-    },
+      window.removeEventListener("message", listener);
+      this.closeShare();
+    }
+  };
+
+  window.addEventListener("message", listener);
+},
+
 
 
 
