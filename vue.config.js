@@ -3,6 +3,6 @@ module.exports = defineConfig({
   transpileDependencies: true
 })
 
-module.exports = {
-  publicPath: '/baly-cereja/'
-};
+//module.exports = {
+//  publicPath: '/baly-cereja/'
+//};
